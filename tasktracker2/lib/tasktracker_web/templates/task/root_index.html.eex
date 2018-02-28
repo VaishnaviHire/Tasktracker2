@@ -1,0 +1,86 @@
+<div>
+<h2>Listing  Incomplete Tasks</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Task title</th>
+      <th>Complete</th>
+   
+      <th> Assigned To<br> (user_id)</th>
+      <th>Mark Complete</th>
+      <th> Start Time </th>
+     <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for task <- @incomplete_tasks do %>
+    <tr>
+      <td><%= task.task_title %></td>
+      <td><%= task.status %></td>
+ 
+       <td> <%= task.user_id %> </td>
+
+           <td><%= link "Mark", to: task_path(@conn, :status_task, task), class: "btn btn-outline-success" %></td>
+  <td> <button class= "start-button btn btn-primary"
+         data-task-id = "<%= task.id %>"
+        data-user-id = "<%= task.user_id %>"
+         data-time = "<%= NaiveDateTime.utc_now%>"
+         data-block-id = "<%= @block_info[task.id] %>"> Start Working </button>
+         </td>
+
+</td>       
+
+      <td class="text-right">
+	 <span><%= link "Show", to: task_path(@conn, :show, task), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: task_path(@conn, :edit, task), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: task_path(@conn, :delete, task), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Task", to: task_path(@conn, :new) %></span>
+
+</div>
+<div>
+<h2>Listing  Complete Tasks</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Task title</th>
+      <th>Complete</th>
+      <th>Assigned to <br> (user_id)</th>
+      <th> Start Time </th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for task <- @complete_tasks do %>
+    <tr>
+      <td><%= task.task_title %></td>
+      <td><%= task.status %></td>
+     
+       <td> <%= task.user_id %> </td>
+
+  <td> <button class= "start-button btn btn-primary"
+         data-task-id = "<%= task.id %>"
+        data-user-id = "<%= task.user_id %>"
+         data-time = "<%= NaiveDateTime.utc_now%>"
+         data-block-id = "<%= @block_info[task.id] %>"> Start Working </button>
+         </td>
+
+</td>
+<td class="text-right">
+       
+         <span><%= link "Show", to: task_path(@conn, :show, task), class: "btn btn-default btn-xs" %></span>
+        
+        <span><%= link "Delete", to: task_path(@conn, :delete, task), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+</div>
