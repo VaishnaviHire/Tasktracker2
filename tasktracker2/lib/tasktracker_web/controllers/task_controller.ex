@@ -30,7 +30,7 @@ defmodule TasktrackerWeb.TaskController do
     render(conn, "root_index.html", complete_tasks: complete_tasks, incomplete_tasks: incomplete_tasks, block_info: block_info)
   else
  render(conn, "index.html", complete_tasks: complete_tasks, incomplete_tasks: incomplete_tasks, under_incomp_tasks: under_all_tasks,
-   block_info: time_info)
+   block_info: block_info)
 end
   end
 

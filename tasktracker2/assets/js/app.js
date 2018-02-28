@@ -9,49 +9,39 @@ import "phoenix_html";
 
 function init() {
  
- $(".start-button").click(addStartTimer);
+ $(".start-button").click(addBlockTime);
   update_buttons();
 }
 
 
-function addStartTimer(e) {
+function addBlockTime(e) {
   
-  let startBtn = $(e.target);
-  let task_id = startBtn.data("task-id");
-  let user_id = startBtn.data("user-id");
-  let time  =startBtn.data("time");
-  let block_id = startBtn.data("block-id")
-  if(block_id!="") {
-    updateTimeBlock(block_id, time, user_id, task_id)
-
-  }
-  else {
-    enterTimeBlock(task_id, user_id, time, "")
-}
-}
-
-
-function enterTimeBlock(task_id, user_id, time, end_time) {
-  let jsonStart = JSON.stringify({
+  let start_button = $(e.target);
+  let task_id = start_button.data("task-id");
+  let user_id = start_button.data("user-id");
+  let time  = start_button.data("time");
+  let block_id = start_button.data("block-id")
+// add new block
+  if(block_id=="") {
+     let time_block = JSON.stringify({
    blocks: {
       task_id:task_id,
       user_id:user_id,
       start_time:time,
-      end_time:end_time
+      end_time:""
     },
   });
   $.ajax(blocks_path, {
     method: "post",
     dataType: "json",
     contentType: "application/json; charset= UTF-8",
-    data:jsonStart,
+    data:time_block,
     success: (resp) => {set_button(user_id, task_id, resp.data.id);}
   });
-
-}
-
-function updateTimeBlock(block_id, time, user_id, task_id) {
-  let jsonStart = JSON.stringify({
+  }
+//update existing block
+  else {
+     let time_block = JSON.stringify({
     blocks: {
       end_time:time
     },
@@ -60,16 +50,20 @@ function updateTimeBlock(block_id, time, user_id, task_id) {
     method: "patch",
     dataType: "json",
     contentType: "application/json; charset= UTF-8",
-    data:jsonStart,
+    data:time_block,
     success: (resp) => {set_button(user_id, task_id, "");}
   });
 
+
+    
 }
+}
+
+
 
 function set_button(user_id, task_id, value) {
   $('.start-button').each( (_, bb) => {
-    console.log(user_id)
-    console.log(task_id)
+  
     if (task_id == $(bb).data('task-id')) {
       $(bb).data('block-id', value)
     }
@@ -94,7 +88,7 @@ function update_buttons() {
 
 
 
-$(".edit-btn").click(function(e){
+$(".edit-timeblock").click(function(e){
   let Btn = $(e.target);
   let block_id = Btn.data("block-id")
   let start_time = Btn.data("start-time")
@@ -142,7 +136,7 @@ $("#edit_form").click(function(e){
   let edit_user_id = $("#edit_user_id").val()
   let edit_block_id = $("#edit_block_id").val()
  
-  let jsonStart = JSON.stringify({
+  let time_block = JSON.stringify({
     blocks: {
       task_id:edit_task_id,
       user_id:edit_user_id,
@@ -155,11 +149,13 @@ $("#edit_form").click(function(e){
     method: "patch",
     dataType: "json",
     contentType: "application/json; charset= UTF-8",
-    data:jsonStart,
-    success: () => { alert('Timeblock Updated') ? "" : location.reload(); },
+    data:time_block,
+    success: () => { alert('Time Block Updated') ? "" : location.reload(); },
   });
 
 });
+
+
 
 $(".delete-timeblock").click(function(e){
   let deletebtn = $(e.target);
