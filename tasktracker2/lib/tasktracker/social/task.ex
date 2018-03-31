@@ -18,6 +18,6 @@ defmodule Tasktracker.Social.Task do
   def changeset(%Task{} = task, attrs) do
     task
     |> cast(attrs, [:task_title, :task_body, :status, :user_id])
-    |> validate_required([:task_title, :task_body, :status])
+    |> validate_required([:task_title, :task_body, :status, :user_id], message: "User needs underlings to create task.")
   end
 end

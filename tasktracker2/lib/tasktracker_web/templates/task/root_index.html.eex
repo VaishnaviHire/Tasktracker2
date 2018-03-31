@@ -9,7 +9,7 @@
    
       <th> Assigned To<br> (user_id)</th>
       <th>Mark Complete</th>
-      <th> Start Time </th>
+      
      <th> </th>
     </tr>
   </thead>
@@ -22,12 +22,7 @@
        <td> <%= task.user_id %> </td>
 
            <td><%= link "Mark", to: task_path(@conn, :status_task, task), class: "btn btn-outline-success" %></td>
-  <td> <button class= "start-button btn btn-primary"
-         data-task-id = "<%= task.id %>"
-        data-user-id = "<%= task.user_id %>"
-         data-time = "<%= NaiveDateTime.utc_now%>"
-         data-block-id = "<%= @block_info[task.id] %>"> Start Working </button>
-         </td>
+  
 
 </td>       
 
@@ -53,7 +48,7 @@
       <th>Task title</th>
       <th>Complete</th>
       <th>Assigned to <br> (user_id)</th>
-      <th> Start Time </th>
+    
       <th></th>
     </tr>
   </thead>
@@ -65,12 +60,7 @@
      
        <td> <%= task.user_id %> </td>
 
-  <td> <button class= "start-button btn btn-primary"
-         data-task-id = "<%= task.id %>"
-        data-user-id = "<%= task.user_id %>"
-         data-time = "<%= NaiveDateTime.utc_now%>"
-         data-block-id = "<%= @block_info[task.id] %>"> Start Working </button>
-         </td>
+  
 
 </td>
 <td class="text-right">

@@ -20,17 +20,24 @@ defmodule TasktrackerWeb.TaskController do
    incomplete_tasks = my_tasks(user1) |> incomplete |> Repo.all
    under_all_tasks = underling_tasks(user1) |> Repo.all 
   
-   tasks  =  Time.time_map(user1.id)
-    
-   block_info = Enum.map(tasks, fn(x) -> Time.taskEndTime(x) end) 
-              |> List.flatten |> Enum.reduce(%{}, fn(x, values) -> Map.put(values,x["task_id"], x["id"]) end) |> IO.inspect
+   
+   timeblockdata=Time.time_map(user1.id)
+    IO.puts("time block map is")
+    IO.inspect(timeblockdata)
+    task_time_info = Enum.map(timeblockdata, fn(x) -> Time.taskEndTime(x) end)
+    task_time_info = List.flatten(task_time_info)
+    task_time_info = Enum.reduce(task_time_info, %{}, fn(x, values) ->
+    Map.put(values, x["task_id"], x["id"])
+end)
 
 
+
+              
    if user1.name == "root" do
-    render(conn, "root_index.html", complete_tasks: complete_tasks, incomplete_tasks: incomplete_tasks, block_info: block_info)
+    render(conn, "root_index.html", complete_tasks: complete_tasks, incomplete_tasks: incomplete_tasks, block_info: task_time_info)
   else
  render(conn, "index.html", complete_tasks: complete_tasks, incomplete_tasks: incomplete_tasks, under_incomp_tasks: under_all_tasks,
-   block_info: block_info)
+   block_info: task_time_info)
 end
   end
 

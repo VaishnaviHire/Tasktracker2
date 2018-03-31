@@ -27,6 +27,6 @@
 </tbody>
 </table>
 
-<span><%= link "New User", to: user_path(@conn, :new) %></span><br>
+
 <span><%= link "Back", to: task_path(@conn, :index) %></span>
 

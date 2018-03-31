@@ -24,8 +24,6 @@ window.blocks_path = "<%= blocks_path(@conn, :index) %>";
     <%= @task.status %>
   </li>
 
-  
-
   <li>
     <strong>Belongs to User:</strong>
     <%= @task.user.name %>
@@ -45,7 +43,6 @@ window.blocks_path = "<%= blocks_path(@conn, :index) %>";
       <th>End Time</th>
       <th>Length of Time Block</th>
     
-   
       <th></th>
       <th></th>
     </tr>
@@ -53,24 +50,29 @@ window.blocks_path = "<%= blocks_path(@conn, :index) %>";
   <tbody>
 <%= for t_block <- @timeblocks do %>
     <tr>
-      <td><%= t_block["start_time"] %></td>
-      <td><%= t_block["end_time"] %></td>
-      <%= if is_nil(t_block["end_time"]) do %>
-      <% time_diff =  NaiveDateTime.diff(NaiveDateTime.utc_now, t_block["start_time"]) %>
-      <% else %>
-      <% time_diff = NaiveDateTime.diff(t_block["end_time"], t_block["start_time"]) %>
-     <% end %>
+       
+        <td><%= t_block["start_time"] %></td>
+          <td><%= if(is_nil(t_block["end_time"])) do %> -
+          <% else %>
+
+          <%= t_block["end_time"] %></td>
+          <% end %>
+
+          <%= if not is_nil(t_block["end_time"]) do %>
+       <% time_diff = NaiveDateTime.diff(t_block["end_time"], t_block["start_time"]) %>
+          <% else %>
+  <% time_diff = NaiveDateTime.diff(NaiveDateTime.utc_now, t_block["start_time"]) %>
+<% end %>
      
       <td><%= div(time_diff, 3600) %> Hours
           
           <%= div(rem(time_diff, 3600), 60) %> Minutes
         
            <%= rem(rem(time_diff, 3600), 60) %> Seconds </td>
-    <%= start_time =  t_block["start_time"] %>
-          <%= end_time = t_block["end_time"] %>
-          <%= block_id = t_block["id"] %>
-     <td><button class="edit-timeblock btn btn-primary" data-block-id ="<%= block_id %>" data-start-time = "<%= start_time %> " data-end-time = "<%= end_time %>" >Edit</button>
-         <span><button class="delete-timeblock btn btn-danger" data-block-id="<%= block_id %>">Delete</button>
+
+    
+     <td><button class="edit-timeblock btn btn-primary" data-block-id ="<%= t_block["id"] %>" data-start-time = "<%= t_block["start_time"] %> " data-end-time = "<%= t_block["end_time"] %>" >Edit</button>
+         <span><button class="delete-timeblock btn btn-danger" data-block-id="<%= t_block["id"] %>">Delete</button>
 </td>
 </tr>
 <% end %>
@@ -88,22 +90,22 @@ window.blocks_path = "<%= blocks_path(@conn, :index) %>";
 
  <div class="form-group">
    <label> Start Time </label>
-<%= datetime_select :editBlock, "start_time", value: DateTime.utc_now(), class: "form-control" %> <br />
+<%= datetime_select :editBlock, "start_time", value: DateTime.utc_now, class: "form-control" %> <br />
 </div>
 
 <div class="form-group">
  <label> End Time </label>
-<%= datetime_select :editBlock, "end_time", value: DateTime.utc_now(),  class: "form-control" %><br />
+<%= datetime_select :editBlock, "end_time", value: DateTime.utc_now,  class: "form-control" %><br />
 </div>
+
+<input type="hidden" id="edit_block_id" value="0" /><br />
+<input type="hidden" id="edit_task_id value = "<%= @task.id %>" />
+<input type="hidden" id="edit_user_id" value = "<%= @current_user.id %>" />
 
 <input type="button" id = "edit_form"  value="Update" class="btn btn-primary"/>
-<input type="button" id = "cancel_form"  value="cancel" class="btn btn-danger"/>
-</form>i
+
+</form>
 </div>
 </div>
-</div>
 
-
-
-
-<span><%= link "Back", to: task_path(@conn, :index) %></span>
+<span><%= link "Back", to: task_path(@conn, :index) %></span></div>

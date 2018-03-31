@@ -28,7 +28,7 @@
            <td><%= link "Mark", to: task_path(@conn, :status_task, task), class: "btn btn-outline-success" %></td>
 
 
-   <td> <button class= "start-button btn btn-primary"
+   <td> <button class= "start-button btn btn-outline-primary"
          data-task-id = "<%= task.id %>"
         data-user-id = "<%= task.user_id %>"
          data-time = "<%= NaiveDateTime.utc_now%>"
@@ -57,10 +57,8 @@
     <tr>
       <th>Task title</th>
       <th>Complete</th>
-    <th> Start time</th>
+    
 
-      <th></th>
-  <th></th>
       <th></th>
       <th></th>
 
@@ -72,12 +70,9 @@
       <td><%= task.task_title %></td>
       <td><%= task.status %></td>
     
- <td> <button class= "start-button btn btn-primary"
-         data-task-id = "<%= task.id %>"
-        data-user-id = "<%= task.user_id %>"
-         data-time = "<%= NaiveDateTime.utc_now%>"
-         data-block-id = "<%= @block_info[task.id] %>"> Start Working </button>
-         </td>
+ 
+   
+
 
 </td>
 
@@ -94,15 +89,13 @@
 </div>
 
 
-
 <div>
 <h4>My Underlings Tasks</h4>
 <table class="table">
   <thead>
     <tr>
       <th>Task title</th>
-      <th>Complete</th>
-    
+      <th>Complete</th>    
       <th> Mark complete </th>
       <th> Start time</th>     
       <th></th>
@@ -115,7 +108,7 @@
       <td><%= task.status %></td>
       
            <td><%= link "Mark", to: task_path(@conn, :status_task, task), class: "btn btn-outline-success" %></td>
-    <td> <button class= "start-button btn btn-primary"
+    <td> <button class= "start-button btn btn-outline-primary"
          data-task-id = "<%= task.id %>" 
 	data-user-id = "<%= task.user_id %>"
          data-time = "<%= NaiveDateTime.utc_now%>"

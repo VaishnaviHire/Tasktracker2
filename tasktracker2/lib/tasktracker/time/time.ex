@@ -111,7 +111,8 @@ end
 
   def time_map(user_id) do
     
-Repo.all(from t in Blocks, where: is_nil(t.end_time), group_by: [:user_id, :task_id, :id, :end_time],
+Repo.all(from t in Blocks, where: is_nil(t.end_time),
+ group_by: [:user_id, :task_id, :id, :end_time],
  select: %{"id" => t.id , 
 	  "start_time" => max(t.start_time), 
 	"user_id" => t.user_id, 
@@ -122,7 +123,9 @@ Repo.all(from t in Blocks, where: is_nil(t.end_time), group_by: [:user_id, :task
 
  def taskEndTime(timemap)do
  
-Repo.all(from t in Blocks, where: t.task_id == ^timemap["task_id"])
+Repo.all(from t in Blocks, where: t.task_id == ^timemap["task_id"],
+  select: %{"id" => t.id,
+  "task_id" => t.task_id})
 end
 
 

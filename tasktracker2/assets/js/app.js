@@ -27,7 +27,7 @@ function addBlockTime(e) {
    blocks: {
       task_id:task_id,
       user_id:user_id,
-      start_time:time,
+      start_time:new Date(),
       end_time:""
     },
   });
@@ -43,7 +43,7 @@ function addBlockTime(e) {
   else {
      let time_block = JSON.stringify({
     blocks: {
-      end_time:time
+      end_time:new Date()
     },
   });
   $.ajax(blocks_path + "/" + block_id, {
@@ -92,14 +92,18 @@ $(".edit-timeblock").click(function(e){
   let Btn = $(e.target);
   let block_id = Btn.data("block-id")
   let start_time = Btn.data("start-time")
+  
   let end_time = Btn.data("end-time")
-  start_time =  new Date (start_time);
+  console.log(start_time)
+  console.log(end_time)
+  console.log("hfjd")
+ 
   end_time = new Date (end_time);
-  $("#editBlock_start_time_year").val(start_time.getFullYear())
-  $("#editBlock_start_time_month").val(start_time.getMonth() + 1)
-  $("#editBlock_start_time_day").val(start_time.getDate())
-  $("#editBlock_start_time_hour").val(start_time.getHours())
-  $("#editBlock_start_time_minute").val(start_time.getMinutes())
+  start_time = new Date();
+ console.log(start_time)
+ console.log(start_time.getFullYear())
+
+  
   
 /// Value of end time
 
@@ -121,7 +125,7 @@ $("#edit_form").click(function(e){
                                  $("#editBlock_start_time_month").val(),
  				$("#editBlock_start_time_day").val(),
  				$("#editBlock_start_time_hour").val(),
-				$("#editBlock_start_time_minuite").val());
+				$("#editBlock_start_time_minute").val());
 
 
    let edit_end_time = new Date ( $("#editBlock_end_time_year").val(),

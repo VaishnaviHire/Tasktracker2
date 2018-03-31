@@ -30,7 +30,7 @@
               <%= link "my account", to: "/users/#{@current_user.id}" %> |
               <%= link "my manager", to: "/users/#{@current_user.manager_id}" %>               | <%= link "my underlings", to: "/users" %>
              <%= if @current_user.name == "root" do %>
-             <%= link "All users", to: "/users" %> 
+            | <%= link "All users", to: "/users" %> 
                <%= end %>
 	 </p>
           <% else %>
